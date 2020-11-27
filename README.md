@@ -1,9 +1,21 @@
-# Catalogo-de-ventas
+# Catalogo de ventas
 
-1 - Ejecutar el comando npm install
-2 - Se debe crear una carpeta config
-3 - Luego crear un archivo database.config.js
-4 - En el archivo creado se debe agregar la conexion a la base de datos
+### Installation
+
+Requered [Node.js](https://nodejs.org/) v4+ to run.
+
+Install
+```sh
+$ npm install
+```
+Config:
+Create folder ```config```
+```sh
+$ cd config
+```
+Later create file ```database.config.js``` and overwrite with:
+url : database Mongo
+```sh
 module.exports = {
     url:  '',
     options:{
@@ -12,3 +24,21 @@ module.exports = {
         useUnifedTopoly: true   
     }
 }
+```
+Run API
+
+```sh
+$ node index.js
+```
+
+
+
+
+
+License
+----
+
+MIT
+
+
+**Free Software, Hell Yeah!**
