@@ -4,7 +4,7 @@
   "description": "Prueba de crud Con Node js para la creación de API REST",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ."
   },
   "keywords": [
     "API",
