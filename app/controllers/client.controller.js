@@ -1,6 +1,5 @@
 const Client = require('../models/client.model.js'),
     Account = require('../models/account.model'),
-    Config = require('../../config/basic.config'),
     jwt = require('jsonwebtoken'),
     bcrypt = require('bcrypt');
 // Create and save a new Client
