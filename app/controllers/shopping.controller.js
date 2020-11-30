@@ -78,16 +78,16 @@ exports.findAll = (req, res) => {
     });
    };
 
-exports.uppdate= (req, res) => {
+exports.update= (req, res) => {
     Shopping.findByIdAndUpdate(req.params.id, {
-        status: req.body.status || "Enviado"
-    }, { new: true }).then(client => {
-        if(!client) {
+        status: req.body.status
+    }, { new: true }).then(shopping => {
+        if(!shopping) {
             return res.status(404).send({
                 message: "client not found with id:" + req.params.id
             });
         }
-        res.status(200).send(client);
+        res.status(200).send(shopping);
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 return res.status(404).send({

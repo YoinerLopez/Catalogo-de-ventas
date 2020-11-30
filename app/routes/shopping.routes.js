@@ -8,5 +8,5 @@ module.exports = (app) => {
     // Get a single shopping by id_client
     app.get('/shopping/user/:id', routeprivate,shopping.findOne);
     // Update a Product by id
-    //app.put('/shopping/:id', routeprivate,shopping.update);
-   };
+    app.put('/shopping/:id',routeprivate, shopping.update);
+};
