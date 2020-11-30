@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const ClientSchema = mongoose.Schema({
  nickname: {
     type: String,
@@ -10,21 +11,24 @@ const ClientSchema = mongoose.Schema({
  },
  password:{
     type: String,
-    required: true
+    required: true,
+    minlength: 4
  },
  email: {
     type: String,
+    unique: true,
     required: true
+
  },
  address: {
-    type: String,
-    required: true
+    type: String
  },
  phone: {
-    type: String,
-    required: true
+    type: String
  }
 }, {
  timestamps: true
 });
+
+
 module.exports = mongoose.model('Client', ClientSchema);

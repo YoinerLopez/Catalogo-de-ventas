@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const StoreSchema = mongoose.Schema({
+const ShopSchema = mongoose.Schema({
  name: {
     type: String,
     index: true,
@@ -13,8 +13,20 @@ const StoreSchema = mongoose.Schema({
     required: true,
     trim: true,
     minlength: 4
- }
+ },
+ nit:{
+   type: String,
+   trim: true,
+},
+address:{
+   type: String,
+   trim: true,
+},
+phone:{
+   type: String,
+   trim: true,
+}
 }, {
  timestamps: true
 });
-module.exports = mongoose.model('Store', StoreSchema);
+module.exports = mongoose.model('Shop', ShopSchema);

@@ -19,13 +19,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 // Activate the CORS access on all routes
 app.use(cors())
+app.set('secretKey', "UNIVERCH");
 // Listening server port
 var port = process.env.PORT || 3000;
+
 // Define the routes [4]
 
 ////////////////////////////////////////////////////////////////////////
+require('./app/routes/client.routes.js')(app);
 require('./app/routes/product.routes.js')(app);
-
+require('./app/routes/store.routes.js')(app);
+require('./app/routes/account.routes.js')(app);
+require('./app/routes/shopping.routes.js')(app);
 app.get('/', (req, res) => {
  res.json({
  "message": "This is a JSON response to a HTTP GET request."
