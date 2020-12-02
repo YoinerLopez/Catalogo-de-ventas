@@ -51,7 +51,14 @@ exports.register = (req, res) => {
             debt: 0
         }); 
         account.save();
-        res.status(200).send(data);
+        const token = jwt.sign({
+            id: client._id
+        }, req.app.get('secretKey'), {
+            expiresIn: '1h'
+        });
+        res.status(200).send({
+            data:  client, token, expiresIn
+        });
     }).catch(err => {
         res.status(500).send({
             message: err.errors || "Something wrong occurred while creating the record."
@@ -97,9 +104,7 @@ exports.login = (req, res) => {
             expiresIn: '1h'
         });
         res.status(200).send({
-            client,
-            mensaje: 'ok',
-            token: token
+            data:  client, token, expiresIn
         });
     }).catch(err => {
         res.status(500).send({
