@@ -56,8 +56,10 @@ exports.register = (req, res) => {
         }, req.app.get('secretKey'), {
             expiresIn: '1h'
         });
+        
         res.status(200).send({
-            data:  client, token, expiresIn
+            client,
+            data:{token ,'expiresIn':'1h'}
         });
     }).catch(err => {
         res.status(500).send({
@@ -104,7 +106,8 @@ exports.login = (req, res) => {
             expiresIn: '1h'
         });
         res.status(200).send({
-            data:  client, token, expiresIn
+            client,
+            data:{token ,'expiresIn':'1h'}
         });
     }).catch(err => {
         res.status(500).send({
