@@ -8,6 +8,6 @@ module.exports = (app) => {
     // Update a client by id
     app.put('/clients/:id',routeprivate, clients.update);
     app.put('/clients/:id/password',routeprivate, clients.updatePassword);
-    
+    app.get('/clients/:id',routeprivate,clients.findOne)
     app.get('/clients',routeprivate,clients.findAll);
    };

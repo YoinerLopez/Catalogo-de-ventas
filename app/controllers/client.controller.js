@@ -224,3 +224,20 @@ exports.findAll = (req, res) => {
     });
     });
    };
+exports.findOne=(res,req)=>{
+    Client.findById(req.params.id).then(client=>{
+        if(!client){
+            return res.status(404).send({
+                message: "User not found with email: "+req.params.id
+            });
+        } 
+        
+        res.status(200).send({
+            client
+        });
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Something wrong occurred while creating the record."
+        });
+    });
+}
