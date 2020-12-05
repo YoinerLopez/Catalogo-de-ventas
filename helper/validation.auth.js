@@ -4,7 +4,8 @@ const express = require('express');
 
 const rutasProtegidas = express.Router(); 
 rutasProtegidas.use((req, res, next) => {
-    const token = req.headers['ACCESS_TOKEN'];
+    const token = req.headers['access_token'];
+    console.log(token);
     if (token) {
       jwt.verify(token, "UNIVERCH", (err, decoded) => {      
         if (err) {
@@ -15,8 +16,8 @@ rutasProtegidas.use((req, res, next) => {
         }
       });
     } else {
-      res.send({ 
-          mensaje: 'Fatal: token not found' 
+      res.status(400).send({ 
+          mensaje: 'Fatal'
       });
     }
  });

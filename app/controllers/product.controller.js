@@ -59,13 +59,6 @@ exports.findAll = (req, res) => {
 
 // Get a single Product by its id
 exports.findOne = (req, res) => {
-    /*var token = req.headers['authorization']
-    if (!token) {
-        res.status(401).send({
-        ok: false,
-        message: 'Toket inválido'
-        })
-    }*/
 
     Product.findById(req.params.id)
     .then(product => {

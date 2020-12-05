@@ -1,4 +1,7 @@
 const Shopping = require('../models/shopping.model.js');
+const Product = require('../models/product.model.js');
+const AccountController = require('../controllers/account.controller');
+const productsController = require('../controllers/product.controller.js');
 // Create and save a new Shopping
 exports.create = (req, res) => {
  console.log("Creating a Shopping ... soon!");
@@ -14,6 +17,11 @@ exports.findOne = (req, res) => {
 exports.uppdate=(req,res)=>{
 console.log("update a Shopping ... soon!");
 }
+function getPrice(product){
+    const price =(product.price-((product.price*product.discount)/100)).toFixed(2);
+    console.log('price '+price+ ' descuento '+product.discount)
+    return Number(price);
+}
 // Create and save a new Shopping
 exports.create = (req, res) => {
     // Validate if the request's body is empty
@@ -23,25 +31,56 @@ exports.create = (req, res) => {
             message: "Shopping data can not be empty"
         });
     }
-
+    var resultado=0;
     // Create a new Shopping with request's data
+    if(req.body.idproducts!=undefined){
+        var hola=0;
+        const iduser =req.body.idclient;
+        for (let index = 0; index < req.body.idproducts.length; index++) {
+            const id= req.body.idproducts[index];
+            console.log(req.body.idproducts[index]);
+            Product.findById(id)
+            .then(data => {
+                if(!data) {
+                    console.log(id);
+                }else{
+                    
+                    resultado+= Number(getPrice(data))*req.body.quantities[index];
+                    hola+=1;
+                    console.log('resultado '+resultado+'index'+hola+req.body.idproducts.length);
+                    
+                    if((hola)==req.body.idproducts.length){
+                        
+                        const shopping = new Shopping({
+                            idclient: req.body.idclient,
+                            idproducts: req.body.idproducts,
+                            quantities: req.body.quantities,
+                            resulted:resultado,
+                            status: req.body.status || "solicitada"
+                        });
+                        // Save the Shopping in the database
+                        shopping.save()
+                        .then(info => {
+                            //subir dinero a la cuenta
+                            upAccount(iduser,resultado);
+                            return res.status(200).send(info);
+                        }).catch(err => {
+                            return res.status(500).send({
+                                message: err.message || "Something wrong occurred while creating the record."
+                            });
+                        });
+                    }
+                }
+                
+                
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }else{
+        console.log('!!!problemas')
+    }
     
-    const shopping = new Shopping({
-        idclient: req.body.idclient,
-        idproducts: req.body.idproducts,
-        quantities: req.body.quantities,
-        resulted: req.body.resulted|| -1,
-        status: req.body.status || "solicitada"
-    });
-    // Save the Shopping in the database
-    shopping.save()
-    .then(data => {
-        res.status(200).send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Something wrong occurred while creating the record."
-        });
-    });
    };
 
 // Get a single Shopping by its id
@@ -99,3 +138,6 @@ exports.update= (req, res) => {
             });
         });
 };
+function upAccount(id,money){
+    AccountController.update(id,money);
+}
