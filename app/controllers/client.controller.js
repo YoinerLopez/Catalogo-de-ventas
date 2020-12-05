@@ -37,7 +37,7 @@ exports.register = (req, res) => {
     }
     const client = new Client({
         nickname: req.body.nickname,
-        password: bcrypt.hashSync(req.body.password, 10),
+        password: req.body.password,
         email: req.body.email,
         address: req.body.address || null,
         phone: req.body.phone || null
