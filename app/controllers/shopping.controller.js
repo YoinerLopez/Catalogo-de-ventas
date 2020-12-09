@@ -47,8 +47,6 @@ exports.create = (req, res) => {
                     
                     resultado+= Number(getPrice(data))*req.body.quantities[index];
                     hola+=1;
-                    console.log('resultado '+resultado+'index'+hola+req.body.idproducts.length);
-                    
                     if((hola)==req.body.idproducts.length){
                         
                         const shopping = new Shopping({
@@ -138,6 +136,41 @@ exports.update= (req, res) => {
             });
         });
 };
+exports.findAllShopping = (req, res) => {
+
+    Shopping.findById(req.params.id)
+    .then(Shopping => {
+        if(!Shopping) {
+            return res.status(404).send({
+                message: "Shopping not found with id:" + req.params.id
+            });
+        }
+        product = [];
+        contador = 0;
+        Shopping.idproducts.forEach(element => {
+            Product.findById(element)
+            .then(products => {
+                product.push(products);
+                contador=contador+1;
+                if(contador===(Shopping.idproducts.length)){
+                    res.status(200).send(product);
+                }
+            }).catch(err => {});
+            
+        });
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Shopping not found with id:" + req.params.id
+            });
+        }
+        return res.status(500).send({
+            message: "Something wrong ocurred while retrieving the record with id:"+ req.params.id +" "+err
+        });
+    });
+
+    
+   };
 function upAccount(id,money){
     AccountController.update(id,money);
 }

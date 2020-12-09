@@ -7,4 +7,6 @@ module.exports = (app) => {
     app.get('/shopping/:id', routeprivate,shopping.findAll);
     // Get a single shopping by id_client
     app.get('/shopping/user/:id', routeprivate,shopping.findOne);
+    // Get a all Product by shopping id
+    app.get('/shopping/products/:id', routeprivate,shopping.findAllShopping);
 };
