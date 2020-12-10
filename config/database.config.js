@@ -1,5 +1,5 @@
 module.exports = {    
-    url:'mongodb+srv://ingeniero:hola1234@cluster0.kvxkx.mongodb.net/catalogoventas?retryWrites=true&w=majority',
+    url:'url de la base datos puede ser local o en la nube',
     options:{
         useCreateIndex: true,
         useNewUrlParser: true,
